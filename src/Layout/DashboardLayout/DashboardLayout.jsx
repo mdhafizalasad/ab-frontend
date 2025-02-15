@@ -3,10 +3,15 @@ import Header from "../../pages/Shared/Header/Header";
 import { Link, Outlet } from "react-router-dom";
 import useAdmin from "../../hooks/useAdmin";
 import { AuthContext } from "../../contexts/AuthProvider";
+import useBuyer from "../../hooks/useBuyer";
+import useSeller from "../../hooks/useSeller";
+
 
 const DashboardLayout = () => {
   const { user } = useContext(AuthContext);
   const [isAdmin] = useAdmin(user?.email);
+  const [isBuyer] = useBuyer(user?.email);
+  const [isSeller] = useSeller(user?.email);
   return (
     <div>
       <Header></Header>
@@ -28,16 +33,79 @@ const DashboardLayout = () => {
             className="drawer-overlay"
           ></label>
           <ul className="menu   min-h-full w-80 p-0 rounded-0">
-            <li>
+            {/* <li>
               <Link className="rounded-none mt-2" to="/dashboard">
-                My Appointment
+                My Products
               </Link>
-            </li>
+            </li> */}
+
             {isAdmin && (
               <>
                 <li>
                   <Link className="rounded-none mt-2" to="/dashboard/all-users">
-                    All Users
+                    All users
+                  </Link>
+                </li>
+                {/* <li>
+                  <Link
+                    className="rounded-none mt-2"
+                    to="/dashboard/add-service"
+                  >
+                    Add a Product
+                  </Link>
+                </li> */}
+                {/* <li>
+                  <Link
+                    className="rounded-none mt-2"
+                    to="/dashboard/my-orders"
+                  >
+                    Seller Orders
+                  </Link>
+                </li> */}
+                <li>
+                  <Link
+                    className="rounded-none mt-2"
+                    to="/dashboard/buyer-orders"
+                  >
+                     Orders
+                  </Link>
+                </li>
+              </>
+            )}
+
+            {isBuyer && (
+              <>
+                
+                
+                <li>
+                  <Link
+                    className="rounded-none mt-2"
+                    to="/dashboard/my-orders"
+                  >
+                    My Orders
+                  </Link>
+                </li>
+                
+              </>
+            )}
+            {isSeller && (
+              <>
+                
+                {/* <li>
+                  <Link
+                    className="rounded-none mt-2"
+                    to="/dashboard/test"
+                  >
+                    Test
+                  </Link>
+                </li> */}
+
+                <li>
+                  <Link
+                    className="rounded-none mt-2"
+                    to="/dashboard/my-product"
+                  >
+                    My Product 
                   </Link>
                 </li>
                 <li>
@@ -45,9 +113,19 @@ const DashboardLayout = () => {
                     className="rounded-none mt-2"
                     to="/dashboard/add-service"
                   >
-                    Add Service
+                    Add a Product
                   </Link>
                 </li>
+
+                {/* <li>
+                  <Link
+                    className="rounded-none mt-2"
+                    to="/dashboard/my-appointment"
+                  >
+                    My Product 
+                  </Link>
+                </li> */}
+                
               </>
             )}
           </ul>

@@ -11,7 +11,7 @@ const Footer = () => {
               <a href="https://ecommerce-16.elitdevs.xyz" className="inline-block">
                 <img
                   className="mx-auto md:mx-0"
-                  src="/src/assets/image/logo.png"
+                  src="/image/logo.png"
                   alt="XMART"
                   height="44"
                 />

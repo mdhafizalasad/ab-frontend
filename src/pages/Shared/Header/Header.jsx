@@ -9,16 +9,20 @@ const Header = () => {
   const manuItems = (
     <>
       <li>
-        {" "}
+        
         <NavLink to="/">Home</NavLink>{" "}
       </li>
       <li>
-        {" "}
-        <NavLink to="/about">About</NavLink>{" "}
+        
+        <NavLink to="/blog">Blog</NavLink>{" "}
       </li>
+      {/* <li>
+       
+        <NavLink to="/about">About</NavLink>{" "}
+      </li> */}
       <li>
-        {" "}
-        <NavLink to="/visa">Shop </NavLink>{" "}
+        
+        <NavLink to="/shop">Shop </NavLink>{" "}
       </li>
 
       {user?.uid ? (

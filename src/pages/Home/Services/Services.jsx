@@ -10,14 +10,15 @@ const Services = () => {
   } = useQuery({
     queryKey: ["all-services"],
     queryFn: async () => {
-      const res = await fetch("https://ajker-bazar-zeta.vercel.app/all-services");
+      const res = await fetch("https://ajker-bazar-zeta.vercel.app//all-services");
+      //  const res = await fetch("http://localhost:3000/all-services");
       const data = await res.json();
       console.log("API Response:", data); // Debugging log
       return Array.isArray(data) ? data : []; // Ensure it's an array
     },
   });
 
-  if (isLoading) {
+  if (isLoading) { 
     return <Loading />;
   }
 

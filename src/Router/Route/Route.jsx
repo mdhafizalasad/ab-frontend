@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router-dom";
 import Main from "../../Layout/Main/Main";
 import Home from "../../pages/Home/Home";
-import About from "../../pages/About/About";
 import Visa from "../../pages/Visa/Visa";
 import Login from "../../pages/Login/Login";
 import SignUp from "./../../pages/SignUp/SignUp";
@@ -11,14 +10,27 @@ import AllUsers from "./../../pages/Dashboard/AllUsers/AllUsers";
 import PrivateRoute from "./../PrivateRoute/PrivateRoute";
 import AdminRoute from "../AdminRoute/AdminRoute";
 import AddService from "../../pages/Dashboard/AddService/AddService";
-import CategoryPage from "../../pages/CategoryPage/CategoryPage"; // Import your CategoryPage component
-import ProductCard from "../../pages/ProductCard/ProductCard";
 import ProductsByCategory from "../../pages/ProductsByCategory/ProductsByCategory";
 import Electronics from "../../pages/ProductsByCategory/Electronics";
 import Vehicles from "../../pages/ProductsByCategory/Vehicles";
+import BlogPage from "../../pages/Blog/BlogPage";
+import NotFound from "../../pages/NotFound/NotFound";
+import UsersList from "../../pages/Dashboard/UsersList";
+import BuyerRoute from "../BuyerRoute/BuyerRoute";
+import BuyerDashboard from "../../pages/Dashboard/Buyer/BuyerDashboard";
+import Payment from "../../pages/Stripe Payment/Payment";
+import MyOrders from "../../pages/MyOrders/MyOrders";
+import BuyerOrders from "../../pages/BuyerOrders/BuyerOrders";
+import SellerRoute from "../SellerRoute/SellerRoute";
+import MyProduct from "../../pages/MyProduct/MyProduct";
+import TestSeller from "../../pages/TestSeller";
+import SellerDashboardLayout from "../../pages/Dashboard/Seller/SellerDashboardLayout";
+
 
 const router = createBrowserRouter([
   {
+    
+   
     path: "/",
     element: <Main></Main>,
     children: [
@@ -27,11 +39,17 @@ const router = createBrowserRouter([
         element: <Home></Home>,
       },
       {
-        path: "/about",
-        element: <About></About>,
+        path: "/blog",
+        element: <BlogPage></BlogPage>
+        
+      },
+     
+      {
+        path: "*",
+        element: <NotFound></NotFound>,
       },
       {
-        path: "/visa",
+        path: "/shop",
         element: <Visa></Visa>,
       },
       {
@@ -44,15 +62,24 @@ const router = createBrowserRouter([
       },
       {
         path: "/product",
-        element: <ProductsByCategory></ProductsByCategory>
+        element: 
+        <PrivateRoute>
+        <ProductsByCategory></ProductsByCategory>
+        </PrivateRoute>
       },
       {
         path: "/electronics",
-        element: <Electronics></Electronics>
+        element: 
+        <PrivateRoute>
+        <Electronics></Electronics>
+        </PrivateRoute>
       },
       {
         path: "/vehicles",
-        element: <Vehicles></Vehicles>
+        element: 
+        <PrivateRoute>
+        <Vehicles></Vehicles>
+        </PrivateRoute>
       },
       // {
       //   path: "category/:id", // Add your category route here
@@ -66,6 +93,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
+    
     element: (
       <PrivateRoute>
         <DashboardLayout></DashboardLayout>
@@ -74,7 +102,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/dashboard",
-        element: <MyAppointment></MyAppointment>,
+        element: 
+       
+      //  <MyAppointment></MyAppointment>
+       
+        <MyProduct></MyProduct>
       },
       {
         path: "/dashboard/all-users",
@@ -85,12 +117,105 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/dashboard/add-service",
+        path: "/dashboard/users-list",
         element: (
           <AdminRoute>
-            <AddService></AddService>
+            <UsersList></UsersList>
           </AdminRoute>
         ),
+      },
+      // {
+      //   path: "/dashboard/add-service",
+      //   element: (
+      //     <AdminRoute>
+      //       <AddService></AddService>
+      //     </AdminRoute>
+      //   ),
+      // },
+      {
+        path: "/dashboard/buyer-orders",
+        element: (
+          <AdminRoute>
+            <BuyerOrders></BuyerOrders>
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "/dashboard/buyer",
+        element: (
+          <BuyerRoute>
+            <BuyerDashboard></BuyerDashboard>
+          </BuyerRoute>
+        ),
+      },
+      // {
+      //   path: "/dashboard/test",
+      //   element: (
+      //     <SellerRoute>
+      //     <TestSeller></TestSeller>
+      //     </SellerRoute> 
+      //   ),
+      // },
+      // {
+      //   path: "/dashboard/my-product",
+      //   element: (
+      //     <SellerRoute>
+      //     <MyProduct></MyProduct>
+      //     </SellerRoute> 
+      //   ),
+      // },
+      {
+        path: "/dashboard/my-product",
+        element: (
+          <SellerRoute>
+          <MyAppointment></MyAppointment>
+          </SellerRoute> 
+        ),
+      },
+
+      {
+        path: "/dashboard/add-service",
+        element: (
+          <SellerRoute>
+            <AddService></AddService>
+            </SellerRoute> 
+        ),
+      },
+      // {
+      //   path: "/dashboard/my-product",
+      //   element: (
+      //     <AdminRoute>         
+      //     <MyAppointment></MyAppointment>
+      //     </AdminRoute>
+      //   ),
+      // },
+      
+      // {
+      //   path: "/dashboard/my-orders",
+      //   element: (
+      //     <PrivateRoute>
+      //       <MyOrders />
+      //     </PrivateRoute>
+      //   ),
+      // },
+      {
+        path: "/dashboard/my-orders",
+        element: (
+          <BuyerRoute>
+            <MyOrders />
+          </BuyerRoute>
+            
+          
+        ),
+      },
+      
+      {
+        path: "/dashboard/payment",
+        element: (
+        <BuyerDashboard>
+          <Payment></Payment>
+          </BuyerDashboard>
+      ),
       },
     ],
   },

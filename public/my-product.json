@@ -1,0 +1,30 @@
+[
+    {
+      "Serial": 1,
+      "Product Name": "Laptop",
+      "Status": "In Stock",
+      "Price": 1200,
+      "Category": "Electronics"
+    },
+    {
+      "Serial": 2,
+      "Product Name": "Smartphone",
+      "Status": "Out of Stock",
+      "Price": 800,
+      "Category": "Electronics"
+    },
+    {
+      "Serial": 3,
+      "Product Name": "Headphones",
+      "Status": "In Stock",
+      "Price": 150,
+      "Category": "Accessories"
+    },
+    {
+      "Serial": 4,
+      "Product Name": "Tablet",
+      "Status": "In Stock",
+      "Price": 600,
+      "Category": "Electronics"
+    }
+  ]

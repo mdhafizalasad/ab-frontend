@@ -7,6 +7,7 @@ const useAdmin = (email) => {
   useEffect(() => {
     if (email) {
       fetch(`https://ajker-bazar-zeta.vercel.app/users/admin/${email}`)
+      //  fetch(`http://localhost:3000/users/admin/${email}`)
         .then((res) => res.json())
         .then((data) => {
           setIsAdmin(data.isAdmin);

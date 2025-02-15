@@ -20,6 +20,7 @@ const VisaAvailableAppointments = ({ selectedDate }) => {
     queryFn: async () => {
       const res = await fetch(
         `https://ajker-bazar-zeta.vercel.app/appointmentOptions?date=${date}`
+        // `http://localhost:3000/appointmentOptions?date=${date}`
       );
       const data = await res.json();
       return data;
@@ -27,7 +28,7 @@ const VisaAvailableAppointments = ({ selectedDate }) => {
   });
 
   if (isLoading) {
-    return <Loading></Loading>;
+    return <Loading></Loading>; 
   }
 
   return (

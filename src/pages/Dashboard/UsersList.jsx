@@ -1,9 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
-import Loading from "../../Shared/Loading/Loading";
-import toast from "react-hot-toast";
 
-const AllUsers = () => {
+import toast from "react-hot-toast";
+import Loading from "../Shared/Loading/Loading";
+
+const UsersList = () => {
   const {
     data: users,
     isLoading,
@@ -12,7 +13,7 @@ const AllUsers = () => {
     queryKey: ["users"],
     queryFn: async () => {
       const res = await fetch("https://ajker-bazar-zeta.vercel.app/users");
-      //  const res = await fetch("http://localhost:3000/users");
+      // const res = await fetch("http://localhost:3000/users");
       const data = await res.json(); 
       return data;
     },
@@ -20,7 +21,7 @@ const AllUsers = () => {
 
   const handleMakeAdmin = (id) => {
     fetch(`https://ajker-bazar-zeta.vercel.app/users/admin/${id}`, {
-    //  fetch(`http://localhost:3000/users/admin/${id}`, {
+    // fetch(`http://localhost:3000/users/admin/${id}`, {
       method: "PUT",
     })
       .then((res) => res.json())
@@ -36,7 +37,7 @@ const AllUsers = () => {
     const agree = window.confirm(`Are you want to delete ${user?.name}?`);
     if (agree) { 
       fetch(`https://ajker-bazar-zeta.vercel.app/users/${user?._id}`, {
-      //  fetch(`http://localhost:3000/users/${user?._id}`, {
+      // fetch(`http://localhost:3000/users/${user?._id}`, {
         method: "DELETE",
       })
         .then((res) => res.json())
@@ -53,12 +54,12 @@ const AllUsers = () => {
   };
 
   if (isLoading) {
-    return <Loading></Loading>;
+    return <Loading></Loading>
   }
 
   return (
     <div>
-      <h1 className="text-2xl">All Users</h1>
+      <h1 className="text-2xl">All Buyers</h1>
       <div className="overflow-x-auto bg-white mt-3">
         <table className="table">
           {/* head */}
@@ -67,8 +68,7 @@ const AllUsers = () => {
               <th>Serial</th>
               <th>Name</th>
               <th>Email</th>
-              <th>User Type</th>
-              <th>Varify</th>
+              <th>Buyer</th>
               <th>Delete</th> 
             </tr>
           </thead>
@@ -79,17 +79,16 @@ const AllUsers = () => {
                 <th>{i + 1}</th>
                 <td>{user?.name}</td>
                 <td>{user?.email}</td>
-                <td>{user?.userType}</td>
                 <td>
                   {user?.role !== "admin" ? (
                     <button
                       onClick={() => handleMakeAdmin(user._id)}
                       className="btn btn-xs btn-primary"
                     >
-                      Verify 
+                      Verify buyer
                     </button>
                   ) : (
-                    "Already Verified"
+                    "Already verified"
                   )}
                 </td>
                 <td>
@@ -109,4 +108,4 @@ const AllUsers = () => {
   );
 };
 
-export default AllUsers;
+export default UsersList;

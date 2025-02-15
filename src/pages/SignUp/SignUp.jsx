@@ -20,7 +20,6 @@ const SignUp = () => {
     formState: { errors },
   } = useForm();
 
-  // to do
   const handleSignUp = (data) => {
     createUser(data.email, data.password)
       .then((result) => {
@@ -31,7 +30,7 @@ const SignUp = () => {
         };
         updateUser(userInf)
           .then(() => {
-            saveUser(data.name, data.email);
+            saveUser(data.name, data.email, data.userType);
           })
           .catch((err) => console.log(err));
       })
@@ -41,9 +40,10 @@ const SignUp = () => {
       });
   };
 
-  const saveUser = (name, email) => {
-    const user = { name, email };
-       fetch("https://ajker-bazar-zeta.vercel.app/users", {
+  const saveUser = (name, email, userType) => {
+    const user = { name, email, userType };
+    fetch("https://ajker-bazar-zeta.vercel.app/users", {
+    //  fetch("http://localhost:3000/users", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -58,31 +58,30 @@ const SignUp = () => {
         }
       });
   };
+
   const handleGoogleSignUp = () => {
     signInWithPopup(auth, googleProvider)
       .then((result) => {
         const user = result.user;
         if (user) {
           toast.success("User Created Successfully with Google");
-          navigate("/"); // Redirect to the home page or desired route
+          navigate("/"); 
         }
-        // setInUser(user); // Fix the typo here
       })
       .catch((error) => {
         console.error("Google Sign-Up Error:", error);
-        toast.error("Google Sign-Up Failed!"); // Show an error toast
+        toast.error("Google Sign-Up Failed!"); 
       });
   };
 
   return (
     <div>
-      <div className="hero  min-h-screen">
+      <div className="hero min-h-screen">
         <div className="hero-content flex-col ">
-          {/* <h1>{signInUser.email}</h1> */}
           <div className="text-center ">
-            <h1 className="text-2xl font-bold">Sing Up now!</h1>
+            <h1 className="text-2xl font-bold">Sign Up now!</h1>
           </div>
-          <div className="card w-96 bg-base-100  shadow-2xl">
+          <div className="card w-96 bg-base-100 shadow-2xl">
             <form onSubmit={handleSubmit(handleSignUp)} className="card-body">
               <div className="form-control">
                 <label className="label">
@@ -125,7 +124,7 @@ const SignUp = () => {
                 </label>
                 <input
                   {...register("password", {
-                    required: "Pasword Is Required",
+                    required: "Password Is Required",
                     minLength: {
                       value: 6,
                       message: "Password must be six characters long",
@@ -133,27 +132,30 @@ const SignUp = () => {
                     pattern: {
                       value: /(?=.*?[A-Z])(?=.*?[!@#$*%])(?=.*?[0-9])/,
                       message:
-                        "Password must be one Uppercase, a Digit and a special characters",
+                        "Password must have one Uppercase, a Digit, and a special character",
                     },
                   })}
                   type="password"
                   placeholder="password"
                   className="input input-bordered"
                 />
-
                 {errors.password && (
                   <p className="text-red-500">{errors.password.message}</p>
                 )}
+              </div>
 
+              <div className="form-control">
                 <label className="label">
-                  <Link
-                    to="/login"
-                    href="#"
-                    className="label-text-alt link link-hover"
-                  >
-                    alredy have an account? Please login
-                  </Link>
+                  <span className="label-text">User Type</span>
                 </label>
+                <select
+                  {...register("userType")}
+                  className="select select-bordered"
+                  defaultValue="buyer"
+                >
+                  <option value="buyer">Buyer</option>
+                  <option value="seller">Seller</option>
+                </select>
               </div>
 
               <div className="form-control mt-1">
@@ -170,9 +172,6 @@ const SignUp = () => {
                 Sign Up with Google
               </button>
             </div>
-
-
-           
           </div>
         </div>
       </div>

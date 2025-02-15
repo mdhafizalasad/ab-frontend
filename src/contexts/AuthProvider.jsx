@@ -13,47 +13,62 @@ export const AuthContext = createContext();
 const auth = getAuth(app);
 
 const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(null); // Default value `null`
   const [loading, setLoading] = useState(true);
-  // create user
-  const createUser = (email, passwrod) => {
+
+  // Create User (Sign Up)
+  const createUser = (email, password) => {
     setLoading(true);
-    return createUserWithEmailAndPassword(auth, email, passwrod);
+    return createUserWithEmailAndPassword(auth, email, password);
   };
 
-  // sing in user
-  const signIn = (email, passwrod) => {
+  // Sign In User
+  const signIn = (email, password) => {
     setLoading(true);
-    return signInWithEmailAndPassword(auth, email, passwrod);
+    return signInWithEmailAndPassword(auth, email, password);
   };
 
-  // user update
+  // Update User Profile
   const updateUser = (userInfo) => {
-    return updateProfile(auth.currentUser, userInfo);
+    return updateProfile(auth.currentUser, userInfo).then(() => {
+      // Update local state after profile update
+      setUser((prevUser) => ({
+        ...prevUser,
+        displayName: userInfo.displayName || prevUser?.displayName,
+        photoURL: userInfo.photoURL || prevUser?.photoURL,
+      }));
+    });
   };
 
-  // logut
+  // Logout User
   const logOut = () => {
     setLoading(true);
-    return signOut(auth);
+    return signOut(auth).then(() => {
+      setUser(null); // Clear user state on logout
+      setLoading(false);
+    });
   };
 
+  // Track User Authentication State
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       setUser(currentUser);
       setLoading(false);
     });
+
     return () => unsubscribe();
   }, []);
 
+  // Authentication Context Data
   const authInfo = {
+    user,
+    loading,
     createUser,
     signIn,
     updateUser,
-    user,
     logOut,
-    loading,
   };
+
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>
   );

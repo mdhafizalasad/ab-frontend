@@ -1,16 +1,23 @@
 import React, { useState } from "react";
 import VisaBanner from "./VisaBanner/VisaBanner";
 import VisaAvailableAppointments from "./VisaAvailableAppointments/VisaAvailableAppointments";
+import CategorySlider from "../CategorySlider/CategorySlider";
+import PromoSection from "../Home/PromoSection/PromoSection";
+import Services from "../Home/Services/Services";
 
 const Visa = () => {
   const [selected, setSelected] = useState(new Date());
 
   return (
     <div>
-      <VisaBanner selected={selected} setSelected={setSelected}></VisaBanner>
+      <CategorySlider></CategorySlider>
+      <PromoSection></PromoSection>
+      <Services></Services>
+
+      {/* <VisaBanner selected={selected} setSelected={setSelected}></VisaBanner>
       <VisaAvailableAppointments
         selectedDate={selected}
-      ></VisaAvailableAppointments>
+      ></VisaAvailableAppointments> */}
     </div>
   );
 };

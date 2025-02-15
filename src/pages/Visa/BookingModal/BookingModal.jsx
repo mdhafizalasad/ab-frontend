@@ -97,7 +97,7 @@ const BookingModal = ({
               defaultValue={user?.email}
               disabled
               className="input input-bordered w-full mt-4"
-            />
+            /> 
 
             <input
               name="phone"

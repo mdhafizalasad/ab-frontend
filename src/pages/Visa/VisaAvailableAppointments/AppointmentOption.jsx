@@ -16,7 +16,7 @@ const AppointmentOption = ({ appointmentOption, setAppointments }) => {
           onClick={() => setAppointments(appointmentOption)}
         >
           Booking Now
-        </label>
+        </label> 
       </div>
     </div>
   );

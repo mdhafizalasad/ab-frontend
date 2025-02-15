@@ -1,13 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import toast, { Toaster } from "react-hot-toast";
+import { AuthContext } from "../../../contexts/AuthProvider"; // Import AuthContext
 
-const ProductModal = () => {
+const ProductModal = ({ selectedProduct }) => {
+  const { user } = useContext(AuthContext); // Get logged-in user
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Perform any validation or API submission logic here
-    // ...
 
-    // Trigger toast notification
     toast.success("Item successfully booked!");
   };
 
@@ -20,57 +20,71 @@ const ProductModal = () => {
       <div className="modal" role="dialog">
         <div className="modal-box">
           <div className="flex justify-between items-center">
-            <h3 className="text-lg font-bold">Item Name</h3>
+            <h3 className="text-lg font-bold">{selectedProduct?.name || "Item Name"}</h3>
             <label
               htmlFor="booking-modal"
               className="btn btn-primary bg-gradient-to-r from-primary to-secondary text-white rounded-full w-12 h-10 text-xl"
             >
               X
-            </label>
+            </label> 
           </div>
 
           <form onSubmit={handleSubmit}>
+            {/* Logged-in User's Name */}
             <input
               type="text"
               name="name"
-              placeholder="Name Here"
+              value={user?.displayName || "Guest User"}
+              disabled
               className="input input-bordered w-full mt-4"
             />
 
+            {/* Logged-in User's Email */}
             <input
               name="email"
               type="email"
-              placeholder="Email Here"
-              disabled
-              className="input input-bordered w-full mt-4"
-            />
-            <input
-              type="text"
-              name="itemname"
-              placeholder="Item Name Here"
-              disabled
-              className="input input-bordered w-full mt-4"
-            />
-            <input
-              type="text"
-              name="price"
-              placeholder="Price Here"
+              value={user?.email || "guest@example.com"}
               disabled
               className="input input-bordered w-full mt-4"
             />
 
+            {/* Selected Product Name */}
+            <input
+              type="text"
+              name="itemname"
+              value={selectedProduct?.name || "Unknown Product"}
+              disabled
+              className="input input-bordered w-full mt-4"
+            />
+
+            {/* Selected Product Price */}
+            <input
+              type="text"
+              name="price"
+              value={selectedProduct?.resalePrice || "0"}
+              disabled
+              className="input input-bordered w-full mt-4"
+            />
+
+            {/* User's Phone Number */}
             <input
               name="phone"
               type="number"
-              placeholder="Phone Here"
+              placeholder="Enter your phone number"
               className="input input-bordered w-full mt-4"
+              required
             />
+
+            {/* Meeting Location */}
             <input
               type="text"
               name="location"
-              placeholder="Meeting Location Here"
+              placeholder="Enter meeting location"
               className="input input-bordered w-full mt-4"
+              required
             />
+
+            {/* Submit Button */}
             <input
               className="btn btn-primary bg-gradient-to-r from-primary to-secondary text-white w-full mt-4"
               type="submit"
